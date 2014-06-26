@@ -1,0 +1,148 @@
+<html>
+
+<head>
+
+<script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+
+function sendData(){
+	if($("#btn").val()=="Processing input data.."){
+		return;
+	}
+	if($('#ipbox').val()==""){
+		$("#ipbox").attr( "placeholder","Please enter something here");
+		$("#ipbox").effect("shake", { times:3 }, 300);
+		return;
+	}
+
+	$(".result").html("<div class=\"waitdiv\">Just a moment..</div>").css( { opacity: 0, "margin-top": "-20px" } );
+	$('.result').animate( {opacity: 1, "margin-top": 0}, 1450, 'swing' );
+
+	$("#btn").val("Processing input data..");
+	$("#btn").css( { opacity: 0, "margin-top": "-20px" } );
+	$("#btn").animate( {opacity: 1, "margin-top": 0}, 450, 'swing' );
+	
+	var itext = $('#ipbox').val();
+	$.get("wolfram.php","q="+encodeURIComponent(itext), function(data) {
+		if(data=="<table></table>"){
+			data="<div class=\"waitdiv\"> Did you just asked \"Who is my best friend?\" ? Because we don't have an answer for your question yet. </div>";
+		}	
+	$(".result").html(data).css( { opacity: 0, "margin-top": "-20px" } );
+	$('.result').animate( {opacity: 1, "margin-top": 0}, 450, 'swing' );
+	$("#btn").val("Submit");
+	$("#btn").css( { opacity: 0, "margin-top": "-20px" } );
+	$("#btn").animate( {opacity: 1, "margin-top": 0}, 450, 'swing' );
+	});
+
+}
+
+function getData(){
+	alert($('#ipbox').val());
+}
+
+
+
+</script>
+<link href="style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<title>
+	Project X
+</title>
+
+
+<body>
+<div id="wrap">
+	<div class="mainwrap">
+
+		<div class="announce">
+				Type anything you want to know about, or something that has an answer which you're looking for.
+		</div>
+
+		
+		<header>
+					<span class="icon">
+						<span class="s1"> </span>
+						<span class="s2"> </span>
+						<span class="s3"> </span>
+						<span class="s4"> </span>
+					</span>
+					<span class="title">Need examples?</span>
+					<div class="social"></div>
+					<section class="content">
+						<p class="examples">
+							Iron man 3 release date</br>
+							Usain bolt height</br>
+							sin 15 degree</br>
+							distance between bangalore and mysore</br>
+							area of karnataka</br>
+							solve x^2+4x+4</br>
+							(x+a)^2</br>
+							taylor series</br>
+							computer meaning</br>
+							500 MB download at 100 kBps</br>
+							when was manmohan singh born?<br/>
+							<span class="follow-us">
+								.. or maybe anything you think that has an answer
+							</span>
+						</p>
+						<p class="about-project">
+							Type something that looks like a question, a fact that has an answer, a domain-specific term, a mathematical equation or an expression to solve, an english word whose meaning you're looking for, or whatever you like.. 
+							</br></br>
+							
+						</p>
+					</section>
+				</header>
+
+
+				<section class="gettext">
+					<input type="text" id="ipbox" placeholder="Please type here and click submit">
+					<input type="submit" id="btn" value="Submit" onClick="sendData(); return false;">
+				</section>
+
+				<div class="resultwrap">
+				<section class="showresult">
+					<p class="result">
+						
+
+					</p>
+
+				</section>
+		
+				</div>
+						
+	
+	</div>
+	<a class='by' href='http://akarthik10.wordpress.com'>Karthik A | http://akarthik10.wordpress.com</a>
+						<a class='git' title='View source on Github' href='https://github.com/'>Source on Github</a>
+</div>
+<script type="text/javascript">
+$('#ipbox').keypress(function (e) {
+  if (e.which == 13) {
+    sendData();
+    return false;   
+  }
+});
+
+
+setTimeout(function(){
+			// tweet button
+			var tweeter = $('<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>');
+			// facebook 'like' button
+			var fbLike = $('<iframe class="fbLike" src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fakarthik10.wordpress.com&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=false&amp;font=arial&amp;action=like&amp;height=35&amp;colorscheme=light&amp;layout=button_count&amp;appId=2398652648"></iframe>');
+			$('.social').append(fbLike, tweeter);
+			
+			!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+			window.getComputedStyle(fbLike[0]).getPropertyValue('top');
+			$('.social').addClass('show');
+		},500);
+
+
+</script>
+</body>
+
+
+
+</html>
